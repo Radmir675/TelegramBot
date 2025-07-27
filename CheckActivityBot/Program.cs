@@ -3,6 +3,8 @@ using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using System.Net;
+using System.Text;
 
 namespace CheckActivityBot
 {
@@ -12,6 +14,7 @@ namespace CheckActivityBot
 
         private static ITelegramBotClient bot;
         private static ReceiverOptions _receiverOptions;
+        private static HttpListener httpListener;
         static async Task Main()
         {
             using var cts = new CancellationTokenSource();
@@ -38,6 +41,8 @@ namespace CheckActivityBot
             // ErrorHandler - обработчик ошибок, связанных с Bot API
             bot.StartReceiving(UpdateHandler, ErrorHandler, _receiverOptions, cts.Token); // Запускаем бота
 
+            // Start web server for deployment
+            StartWebServer();
 
             Console.WriteLine($"{me.FirstName} запущен!");
 
@@ -77,6 +82,42 @@ namespace CheckActivityBot
 
             Console.WriteLine(ErrorMessage);
             return Task.CompletedTask;
+        }
+
+        private static void StartWebServer()
+        {
+            httpListener = new HttpListener();
+            httpListener.Prefixes.Add("http://0.0.0.0:5000/");
+            httpListener.Start();
+            
+            Task.Run(() =>
+            {
+                while (httpListener.IsListening)
+                {
+                    try
+                    {
+                        var context = httpListener.GetContext();
+                        var response = context.Response;
+                        
+                        string responseString = "Bot is running!";
+                        byte[] buffer = Encoding.UTF8.GetBytes(responseString);
+                        
+                        response.ContentLength64 = buffer.Length;
+                        response.ContentType = "text/plain";
+                        response.StatusCode = 200;
+                        
+                        var output = response.OutputStream;
+                        output.Write(buffer, 0, buffer.Length);
+                        output.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Web server error: {ex.Message}");
+                    }
+                }
+            });
+            
+            Console.WriteLine("Web server started on http://0.0.0.0:5000/");
         }
 
         //static async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken ct)
