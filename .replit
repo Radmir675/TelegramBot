@@ -5,7 +5,7 @@ run = "dotnet run"
 channel = "stable-25_05"
 
 [deployment]
-run = ["sh", "-c", "dotnet run"]
+run = ["sh", "-c", "dotnet run --project CheckActivityBot"]
 
 [workflows]
 runButton = "Run CheckActivityBot"
