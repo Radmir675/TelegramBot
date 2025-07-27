@@ -1,4 +1,4 @@
-﻿using Telegram.Bot;
+using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -16,6 +16,10 @@ namespace CheckActivityBot
         {
             using var cts = new CancellationTokenSource();
             bot = new TelegramBotClient(_token, cancellationToken: cts.Token);
+
+            // Delete webhook if it exists to allow polling
+            await bot.DeleteWebhook(cancellationToken: cts.Token);
+            Console.WriteLine("Webhook deleted successfully.");
 
             var me = await bot.GetMe();
             Console.WriteLine($"Hello, World! I am user {me.Id} and my name is {me.FirstName}.");
