@@ -1,12 +1,12 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Telegram.Bot;
 using Telegram.Bot.Exceptions;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Http;
 
 namespace CheckActivityBot
 {
@@ -47,13 +47,13 @@ namespace CheckActivityBot
             // Создаем и запускаем веб-сервер
             var builder = WebApplication.CreateBuilder();
             builder.Services.AddCors();
-            
+
             var app = builder.Build();
-            
+
             app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-            
+
             // Главная страница с информацией о боте
-            app.MapGet("/", () => 
+            app.MapGet("/", () =>
             {
                 var uptime = DateTime.Now - startTime;
                 var html = $@"
@@ -126,7 +126,7 @@ namespace CheckActivityBot
 
             // Запускаем веб-сервер на порту 5000
             app.Urls.Add("http://0.0.0.0:5000");
-            
+
             Console.WriteLine("Веб-сервер запущен на http://0.0.0.0:5000");
             Console.WriteLine("Нажмите Ctrl+C для остановки...");
 
@@ -143,7 +143,7 @@ namespace CheckActivityBot
                             messagesReceived++;
                             var message = update.Message;
                             Console.WriteLine($"Получено сообщение от {message?.From?.FirstName}: {message?.Text}");
-                            
+
                             if (message?.Text?.ToLower() == "/start")
                             {
                                 await botClient.SendMessage(message.Chat, "Добро пожаловать! Бот работает и готов к использованию.");
@@ -151,7 +151,7 @@ namespace CheckActivityBot
                             else if (message?.Text?.ToLower() == "/status")
                             {
                                 var uptime = DateTime.Now - startTime;
-                                await botClient.SendMessage(message.Chat, 
+                                await botClient.SendMessage(message.Chat,
                                     $"🤖 Статус бота:\n" +
                                     $"✅ Работает: {uptime.Days}д {uptime.Hours}ч {uptime.Minutes}м\n" +
                                     $"📨 Обработано сообщений: {messagesReceived}");
@@ -179,19 +179,5 @@ namespace CheckActivityBot
             Console.WriteLine(ErrorMessage);
             return Task.CompletedTask;
         }
-
-        //static async Task HandleUpdateAsync(ITelegramBotClient bot, Update update, CancellationToken ct)
-        //{
-        //    if (update.Type == Telegram.Bot.Types.Enums.UpdateType.Message)
-        //    {
-        //        var message = update.Message;
-        //        if (message.Text.ToLower() == "/start")
-        //        {
-        //            await bot.SendMessage(message.Chat, "Добро пожаловать на борт, добрый путник!");
-        //            return;
-        //        }
-        //        await bot.SendMessage(message.Chat, "Здоров, братан! И тебе не хворать!");
-        //    }
-        //}
     }
 }
