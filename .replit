@@ -18,3 +18,7 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "dotnet run --project CheckActivityBot"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
