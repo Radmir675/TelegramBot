@@ -1,0 +1,20 @@
+modules = ["dotnet-7.0", "dotnet-8.0"]
+run = "dotnet run"
+
+[nix]
+channel = "stable-25_05"
+
+[deployment]
+run = ["sh", "-c", "dotnet run"]
+
+[workflows]
+runButton = "Run CheckActivityBot"
+
+[[workflows.workflow]]
+name = "Run CheckActivityBot"
+author = 45597927
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "dotnet run --project CheckActivityBot"
