@@ -1,9 +1,10 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.36105.23 d17.13
+VisualStudioVersion = 17.13.36105.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckActivityBot", "CheckActivityBot\CheckActivityBot.csproj", "{121FFBB0-AEF0-455E-B05C-29E81A81B0E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP-Telegram_Bot", "ASP-Telegram_Bot\ASP-Telegram_Bot.csproj", "{D969A549-4B6F-40F2-9E22-0FD984CAA750}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +16,10 @@ Global
 		{121FFBB0-AEF0-455E-B05C-29E81A81B0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{121FFBB0-AEF0-455E-B05C-29E81A81B0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{121FFBB0-AEF0-455E-B05C-29E81A81B0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D969A549-4B6F-40F2-9E22-0FD984CAA750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D969A549-4B6F-40F2-9E22-0FD984CAA750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D969A549-4B6F-40F2-9E22-0FD984CAA750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D969A549-4B6F-40F2-9E22-0FD984CAA750}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

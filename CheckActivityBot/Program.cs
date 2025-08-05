@@ -44,6 +44,11 @@ namespace CheckActivityBot
             bot.StartReceiving(UpdateHandler, ErrorHandler, _receiverOptions, cts.Token);
             Console.WriteLine($"{botInfo.FirstName} запущен!");
 
+            // await StartServerASP(cts);
+        }
+
+        private static async Task StartServerASP(CancellationTokenSource cts)
+        {
             // Создаем и запускаем веб-сервер
             var builder = WebApplication.CreateBuilder();
             builder.Services.AddCors();
@@ -132,6 +137,7 @@ namespace CheckActivityBot
 
             await app.RunAsync(cts.Token);
         }
+
         private static async Task UpdateHandler(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             try
@@ -158,6 +164,7 @@ namespace CheckActivityBot
                             }
                             return;
                         }
+
                 }
             }
             catch (Exception ex)
